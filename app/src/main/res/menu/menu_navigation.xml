@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group>
+        <item
+            android:id="@+id/menu_android"
+            android:title="@string/android" />
+        <item
+            android:id="@+id/menu_ios"
+            android:title="@string/ios" />
+        <item
+            android:id="@+id/menu_front_end"
+            android:title="@string/front_end" />
+    </group>
+    <item
+        android:id="@+id/menu_app"
+        android:title="@string/app" />
+    <item
+        android:id="@+id/menu_recommend"
+        android:title="@string/recommend" />
+    <item
+        android:id="@+id/menu_expand_resource"
+        android:title="@string/expand_resource" />
+    <item
+        android:id="@+id/menu_rest_video"
+        android:title="@string/rest_video" />
+    <item
+        android:id="@+id/menu_welfare"
+        android:title="@string/welfare" />
+
+</menu>
