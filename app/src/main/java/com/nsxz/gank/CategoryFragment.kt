@@ -2,16 +2,20 @@ package com.nsxz.gank
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.bumptech.glide.Glide
+import com.nsxz.gank.api.Category
 import com.nsxz.gank.api.GetTypeReq
 import com.nsxz.gank.api.GetTypeResp
 import com.nsxz.gank.constants.CategoryName
 import com.nsxz.gank.http.Callback
 import com.nsxz.gank.http.Client
-import com.nsxz.gank.http.JsonMarshaller
 import kotlinx.android.synthetic.main.fragment_category.*
+import kotlinx.android.synthetic.main.item_type_data.view.*
 
 /**
  * @author zhangyuan
@@ -19,30 +23,76 @@ import kotlinx.android.synthetic.main.fragment_category.*
  */
 class CategoryFragment : Fragment() {
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater?.inflate(R.layout.fragment_category, container, false)
+    private val req = GetTypeReq().apply {
+        category = CategoryName.ANDROID
     }
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
-        sendButton.setOnClickListener {
-            val req = GetTypeReq()
-            req.category = CategoryName.ANDROID
-            Client.send(req, object : Callback<GetTypeResp> {
-                override fun onSuccess(resp: GetTypeResp) {
-                    showButton.text = JsonMarshaller.formatJson(JsonMarshaller.toJson(resp))
-                }
+    private val dataList = mutableListOf<Category>()
 
-                override fun onFailure(resp: GetTypeResp) {
-                    showButton.text = JsonMarshaller.toJson(resp)
-                }
+    private val adapter = CategoryAdapter()
 
-                override fun onError(errCode: Int) {
-                    showButton.text = errCode.toString()
-                }
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        return inflater.inflate(R.layout.fragment_category, container, false)
+    }
 
-            })
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        refreshLayout.setOnRefreshListener {
+            getData()
         }
+        listView.layoutManager = LinearLayoutManager(activity).apply {
+            orientation = LinearLayoutManager.VERTICAL
+        }
+        listView.adapter = adapter
     }
+
+    private fun getData() {
+        Client.send(req, object : Callback<GetTypeResp> {
+            override fun onSuccess(resp: GetTypeResp) {
+                finishRefresh()
+                dataList.addAll(resp.results)
+                adapter.notifyDataSetChanged()
+            }
+
+            override fun onFailure(resp: GetTypeResp) {
+                finishRefresh()
+            }
+
+            override fun onError(errCode: Int) {
+                finishRefresh()
+            }
+        })
+    }
+
+    private fun finishRefresh() {
+        refreshLayout.finishRefresh()
+        refreshLayout.finishLoadmore()
+    }
+
+    private inner class CategoryAdapter : RecyclerView.Adapter<CategoryHolder>() {
+        override fun onBindViewHolder(holder: CategoryHolder?, position: Int) {
+            val category = dataList[position]
+            val images = category.images
+            if (images != null && images.isNotEmpty()) {
+                Glide.with(this@CategoryFragment).load(images[0]).into(holder?.itemView?.image)
+                holder?.itemView?.image?.visibility = View.VISIBLE
+            } else {
+                holder?.itemView?.image?.visibility = View.GONE
+            }
+            holder?.itemView?.desc?.text = category.desc
+            holder?.itemView?.provider?.text = category.who
+            holder?.itemView?.time?.text = category.publishedAt
+        }
+
+        override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): CategoryHolder {
+            return CategoryHolder(LayoutInflater.from(activity).inflate(R.layout.item_type_data, parent, false))
+        }
+
+        override fun getItemCount(): Int = dataList.size
+
+
+    }
+
+    private inner class CategoryHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
     companion object {
         @JvmStatic

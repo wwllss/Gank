@@ -2,6 +2,7 @@ package com.nsxz.gank.http
 
 import android.os.AsyncTask
 import android.text.TextUtils
+import android.util.Log
 import com.nsxz.gank.util.FieldUtils
 
 /**
@@ -14,8 +15,10 @@ internal class HttpTask<T : Resp>(private val callback: Callback<T>?) : AsyncTas
         val req = params[0]!!
         val reqInfo = getReqInfo(req)
         val result = HttpSender().send(processUrl(req, reqInfo.path), reqInfo.method, buildPostParams(req, reqInfo.method))
-        if (!TextUtils.isEmpty(result.content)) {
-            val resp: T = JsonMarshaller.fromJson(result.content, RespType.typeOf(callback!!))
+        val content = result.content
+        if (!TextUtils.isEmpty(content)) {
+            Log.i("Response", content)
+            val resp: T = JsonMarshaller.fromJson(content, RespType.typeOf(callback!!))
             resp.errCode = result.errCode
             return resp
         }

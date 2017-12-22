@@ -4,26 +4,24 @@ package com.nsxz.gank.api
  * @author zhangyuan
  * @date 2017/12/22.
  */
-class Category {
+data class Category(
+        val _id: String,
 
-    lateinit var _id: String
+        val createdAt: String,
 
-    lateinit var createdAt: String
+        val desc: String,
 
-    lateinit var desc: String
+        val publishedAt: String,
 
-    lateinit var publishedAt: String
+        val source: String,
 
-    lateinit var source: String
+        val type: String,
 
-    lateinit var type: String
+        val url: String,
 
-    lateinit var url: String
+        val who: String,
 
-    lateinit var who: String
+        val used: Boolean,
 
-    var used: Boolean = false
-
-    lateinit var images: MutableList<String>
-
-}
+        val images: MutableList<String>?
+)
