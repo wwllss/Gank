@@ -7,7 +7,8 @@ import com.scwang.smartrefresh.layout.footer.ClassicsFooter
 import com.scwang.smartrefresh.layout.header.ClassicsHeader
 
 /**
- * Created by zhangyuan on 2017/12/23.
+ * @author zhangyuan
+ * @date 2017/12/23.
  */
 class GankApp : Application() {
 
