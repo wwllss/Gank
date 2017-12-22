@@ -1,9 +1,10 @@
-package com.nsxz.gank
+package com.nsxz.gank.ui
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v4.view.GravityCompat
 import android.support.v4.widget.DrawerLayout
+import com.nsxz.gank.R
 import com.nsxz.gank.extension.replaceFragment
 import com.nsxz.gank.extension.screenWidth
 import kotlinx.android.synthetic.main.activity_main.*

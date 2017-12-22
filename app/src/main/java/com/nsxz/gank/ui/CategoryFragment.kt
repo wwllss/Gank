@@ -1,4 +1,4 @@
-package com.nsxz.gank
+package com.nsxz.gank.ui
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.bumptech.glide.Glide
+import com.nsxz.gank.R
 import com.nsxz.gank.api.Category
 import com.nsxz.gank.api.GetTypeReq
 import com.nsxz.gank.api.GetTypeResp
@@ -43,6 +44,7 @@ class CategoryFragment : Fragment() {
             orientation = LinearLayoutManager.VERTICAL
         }
         listView.adapter = adapter
+        refreshLayout.autoRefresh()
     }
 
     private fun getData() {

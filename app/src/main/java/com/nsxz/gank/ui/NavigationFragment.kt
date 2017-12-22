@@ -1,4 +1,4 @@
-package com.nsxz.gank
+package com.nsxz.gank.ui
 
 import android.graphics.BitmapFactory
 import android.os.Bundle
@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.nsxz.gank.R
 import com.nsxz.gank.extension.screenWidth
 import com.nsxz.gank.extension.toast
 import kotlinx.android.synthetic.main.fragment_navigation.*
