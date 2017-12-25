@@ -11,7 +11,7 @@ import java.lang.reflect.Type
  */
 object JsonMarshaller {
 
-    private val G_SON = GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+    private val G_SON = GsonBuilder()
             .serializeSpecialFloatingPointValues()
             .create()
 
