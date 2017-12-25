@@ -80,9 +80,12 @@ class CategoryFragment : Fragment() {
             } else {
                 holder?.itemView?.image?.visibility = View.GONE
             }
-            holder?.itemView?.desc?.text = category.desc
-            holder?.itemView?.provider?.text = category.who
-            holder?.itemView?.time?.text = category.publishedAt
+            holder?.itemView?.apply {
+                desc?.text = category.desc
+                provider?.text = category.who
+                time?.text = category.publishedAt
+            }
+
         }
 
         override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): CategoryHolder {
