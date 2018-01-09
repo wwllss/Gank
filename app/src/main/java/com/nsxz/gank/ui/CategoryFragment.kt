@@ -71,21 +71,20 @@ class CategoryFragment : Fragment() {
     }
 
     private inner class CategoryAdapter : RecyclerView.Adapter<CategoryHolder>() {
-        override fun onBindViewHolder(holder: CategoryHolder?, position: Int) {
+        override fun onBindViewHolder(holder: CategoryHolder, position: Int) {
             val category = dataList[position]
             val images = category.images
             if (images != null && images.isNotEmpty()) {
-                Glide.with(this@CategoryFragment).load(images[0]).into(holder?.itemView?.image)
-                holder?.itemView?.image?.visibility = View.VISIBLE
+                Glide.with(this@CategoryFragment).load(images[0]).into(holder.itemView.image)
+                holder.itemView.image.visibility = View.VISIBLE
             } else {
-                holder?.itemView?.image?.visibility = View.GONE
+                holder.itemView.image.visibility = View.GONE
             }
-            holder?.itemView?.apply {
-                desc?.text = category.desc
-                provider?.text = category.who
-                time?.text = category.publishedAt
+            holder.itemView.apply {
+                desc.text = category.desc
+                provider.text = category.who
+                time.text = category.publishedAt
             }
-
         }
 
         override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): CategoryHolder {
