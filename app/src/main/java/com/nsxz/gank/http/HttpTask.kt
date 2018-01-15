@@ -40,7 +40,7 @@ internal class HttpTask<T : Resp>(private val callback: Callback<T>?) : AsyncTas
             return ""
         }
         val fields = FieldUtils.getFields(req::class.java)
-        var params: String = ""
+        var params = ""
         fields.forEachIndexed { index, field ->
             field!!.isAccessible = true
             params += "${if (index > 0) "&" else ""}{${field.name}}=${field.get(req)}"
