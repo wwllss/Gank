@@ -26,3 +26,9 @@ fun FragmentActivity.replaceFragment(containerViewId: Int, fragment: Fragment, t
             .replace(containerViewId, fragment, tag)
             .commitAllowingStateLoss()
 }
+
+fun Fragment.replaceFragment(containerViewId: Int, fragment: Fragment, tag: String? = null): Int {
+    return childFragmentManager.beginTransaction()
+            .replace(containerViewId, fragment, tag)
+            .commitAllowingStateLoss()
+}
