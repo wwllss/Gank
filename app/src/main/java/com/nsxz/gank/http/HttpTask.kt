@@ -29,7 +29,7 @@ internal class HttpTask<T : Resp>(private val callback: Callback<T>?) : AsyncTas
         val fields = FieldUtils.getFields(req::class.java)
         var tempPath = path
         fields.forEach {
-            it!!.isAccessible = true
+            it.isAccessible = true
             tempPath = tempPath.replace("{${it.name}}", it.get(req).toString())
         }
         return "http://gank.io/api$tempPath"

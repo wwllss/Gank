@@ -14,9 +14,9 @@ import java.util.HashMap
  */
 object FieldUtils {
 
-    private val CACHE = mutableMapOf<Class<*>, Array<Field?>>()
+    private val CACHE = mutableMapOf<Class<*>, Array<Field>>()
 
-    fun getFields(clazz: Class<*>): Array<Field?> {
+    fun getFields(clazz: Class<*>): Array<Field> {
         val cache = CACHE[clazz]
         if (cache != null)
             return cache
@@ -26,12 +26,12 @@ object FieldUtils {
                 || clazzName.startsWith("java.")
                 || clazzName.startsWith("android.")
                 || clazzName.startsWith("javax."))
-            return arrayOfNulls(0)
+            return emptyArray()
 
         val superClass = clazz.superclass
         //递归调用 获取父类字段
         val superFields = getFields(superClass)
-        val fields = ArrayList<Field?>()
+        val fields = ArrayList<Field>()
         Collections.addAll(fields, *superFields)
 
         val selfFields = clazz.declaredFields
@@ -43,7 +43,7 @@ object FieldUtils {
             }
         }
         val array = fields.toTypedArray()
-        CACHE.put(clazz, array)
+        CACHE[clazz] = array
         return array
     }
 
