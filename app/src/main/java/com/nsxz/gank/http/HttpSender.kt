@@ -51,7 +51,7 @@ internal class HttpSender {
     }
 
     companion object {
-        val DEFAULT_TIMEOUT = 10000
+        const val DEFAULT_TIMEOUT = 10000
     }
 
 }
